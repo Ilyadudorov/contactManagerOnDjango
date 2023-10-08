@@ -1,0 +1,20 @@
+{% extends 'contactManager/base.html' %}
+
+{% block content %}
+
+
+
+<form method="post" action="{% url 'addContactInGroupPost' group.pk %}">
+    {% csrf_token %}
+    <p><select size="5" multiple name="contactListId" >
+        <option disabled>Выберите контакт(ы)</option>
+        {% for c in listContact %}
+        <option value={{c.pk}}>{{c.name}}</option>
+        {% endfor %}
+       </select></p>
+<input type="submit" value="Отправить" >
+</form>
+
+
+
+{% endblock content %}

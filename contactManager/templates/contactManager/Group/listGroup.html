@@ -1,0 +1,22 @@
+{% extends 'contactManager/base.html' %}
+
+{% block content %}
+<li><a href="{% url 'createGroup' %}">Создать группу</a></li>
+<h2>Список групп</h2>
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+      
+        {% for g in listGroup %}
+
+        <td><a id='linktd' href="{% url 'selectGroup' g.pk %}">{{g.name}}</a></td>
+
+        {% endfor %}
+    </tbody>
+  </table>
+
+{% endblock content %}

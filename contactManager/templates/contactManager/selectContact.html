@@ -1,0 +1,29 @@
+{% extends 'contactManager/base.html' %}
+
+{% block content %}
+
+<h2>Имя контакта: {{ contact.name }}</h2> <br>
+<h4>Контактные данные</h4> <br>
+<a id='linktd' href="{% url 'editContact' contact.pk %}">Редактировать контакт</a>
+<li>
+    {% if contact.email != 'None' %}
+        <ul>
+            <p>Электронная почта: {{ contact.email }}</p>
+        </ul>
+    {% endif %}
+
+    {% if contact.phoneNumber != 'None' %}
+        <ul>
+            <p>Номер телефона: {{ contact.phoneNumber }}</p>
+        </ul>
+    {% endif %}
+
+    {% if contact.birthday != 'None' %}
+        <ul>
+            <p>День рождения: {{ contact.birthday }}</p>
+        </ul>
+    {% endif %}
+</li>
+
+<a id='linktd' href="{% url 'delContact' contact.pk %}">Удалить контакт</a>
+{% endblock content %}

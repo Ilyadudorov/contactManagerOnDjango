@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>{% block title %}Contact manager{% endblock title %}</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'contactManager/css/style.css' %}">
+    <script type="text/javascript" src="{% static 'contactManager/js/main.js' %}"></script>
+    
+</head>
+<body onload="clockTimer();">
+    <header align="center">
+        <ul>
+            <li><a href="{% url 'contactList' %}">Контакты</a></li>
+            <li><a href="{% url 'listGroup' %}">Группы</a></li>
+            <li><a href="{% url 'favoriteList' %}">Избранные</a></li>
+            <li><a href="{% url 'addContact' %}">Добавить контакт</a></li>
+            <li>
+                <div class="clockpage">
+                
+                  <span id="clock"></span>
+                  <span id="dayOfWeek"></span></li>
+        </ul>
+    </header>
+    <h1>{% block header %}Default header{% endblock header %}</h1>
+    <div>{% block content%}Default content{% endblock content %}</div>
+    <div>MyCorp. 2023. All rights reserved.</div>
+    <script>
+        $(document).ready(function($) {
+            $('*[data-href]').on('click', function() {
+                window.location = $(this).data("href");
+            });
+        });
+    </script>
+</body>
+</html>
