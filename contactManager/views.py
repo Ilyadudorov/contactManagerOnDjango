@@ -4,6 +4,8 @@ from contactManager.models import *
 from .forms import UserForm
 from django.shortcuts import redirect
 import requests
+import json
+import os
 
 # Create your views here.
 
@@ -82,12 +84,20 @@ def editContactPost(request, contact_id):
     # return HttpResponse("Hello mir")
     return redirect(contactList)
 
+# def favoriteList(request):
+#     favoriteContact = Contact.objects.filter(is_favorite = True)
+#     responseApi = requests.get('https://randomuser.me/api/')
+#     # statusCode = responseApi.status_code
+#     statusCode = responseApi.text
+#     data = {'listContact': favoriteContact, 'title':'Список избранных контактов','statusCode': statusCode}
+#     return render(request, 'contactManager/favoriteList.html',context=data)
+
+
 def favoriteList(request):
-    favoriteContact = Contact.objects.filter(is_favorite = True)
-    responseApi = requests.get('https://randomuser.me/api/')
-    # statusCode = responseApi.status_code
-    statusCode = responseApi.text
-    data = {'listContact': favoriteContact, 'title':'Список избранных контактов','statusCode': statusCode}
+    weatherApi = open('weather.json', encoding='utf-8')
+    jsonResult = json.loads(weatherApi.read()) 
+    temp = (jsonResult['fact'])['temp']
+    data = {'temp': temp}
     return render(request, 'contactManager/favoriteList.html',context=data)
 
 def delContact(request, contact_id):

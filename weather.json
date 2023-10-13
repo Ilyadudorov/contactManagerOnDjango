@@ -1,0 +1,76 @@
+{
+    "now": 1696871157,
+    "now_dt": "2023-10-09T17:05:57.067428Z",
+    "info": {
+        "url": "https://yandex.ru/pogoda/43?lat=55.796129&lon=49.106414",
+        "lat": 55.796129,
+        "lon": 49.106414
+    },
+    "fact": {
+        "obs_time": 1696871157,
+        "temp": 4,
+        "feels_like": 0,
+        "icon": "bkn_n",
+        "condition": "cloudy",
+        "wind_speed": 2.5,
+        "wind_dir": "sw",
+        "pressure_mm": 740,
+        "pressure_pa": 986,
+        "humidity": 85,
+        "daytime": "n",
+        "polar": false,
+        "season": "autumn",
+        "wind_gust": 6.1
+    },
+    "forecast": {
+        "date": "2023-10-10",
+        "date_ts": 1696885200,
+        "week": 41,
+        "sunrise": "06:03",
+        "sunset": "16:58",
+        "moon_code": 6,
+        "moon_text": "moon-code-6",
+        "parts": [
+            {
+                "part_name": "night",
+                "temp_min": 4,
+                "temp_avg": 4,
+                "temp_max": 4,
+                "wind_speed": 3.2,
+                "wind_gust": 7.5,
+                "wind_dir": "sw",
+                "pressure_mm": 742,
+                "pressure_pa": 988,
+                "humidity": 91,
+                "prec_mm": 0.7,
+                "prec_prob": 20,
+                "prec_period": 480,
+                "icon": "ovc_-ra",
+                "condition": "light-rain",
+                "feels_like": 0,
+                "daytime": "n",
+                "polar": false
+            },
+            {
+                "part_name": "morning",
+                "temp_min": 4,
+                "temp_avg": 4,
+                "temp_max": 5,
+                "wind_speed": 3,
+                "wind_gust": 8,
+                "wind_dir": "w",
+                "pressure_mm": 745,
+                "pressure_pa": 992,
+                "humidity": 88,
+                "prec_mm": 0.6,
+                "prec_prob": 30,
+                "prec_period": 360,
+                "icon": "ovc_-ra",
+                "condition": "light-rain",
+                "feels_like": 0,
+                "daytime": "d",
+                "polar": false
+            }
+        ]
+    }
+}

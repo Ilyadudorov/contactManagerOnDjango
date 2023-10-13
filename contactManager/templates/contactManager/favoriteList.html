@@ -1,38 +1,7 @@
 {% extends 'contactManager/base.html' %}
 <h1>{% block header %}{{title}}{% endblock header %}
 {% block content %}
-<h2>{{statusCode}}</h2>
-    <table class="table">
-        <thead>
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">Name</th>
-            <th scope="col">Email</th>
-            <th scope="col">Number phone</th>
-          </tr>
-        </thead>
-        <tbody>
-          
-            {% for c in listContact %}
-          
-            <tr>
-            <th scope="row">{{c}}</th>
-            <td><a id='linktd' href="{% url 'selectContact' c.pk %}">{{c.name}}</a></td>
 
-            {% if c.email != None %}
-              <td>{{c.email}}</td>
-            {% else %}
-              <td></td>
-            {% endif %}
+<h2>Погода: {{ temp }} градуса</h2>
 
-            {% if c.phoneNumber != 'None' %}
-              <td>{{c.phoneNumber}}</td>
-            {% else %}
-              <td></td>
-            {% endif %}
-            
-          </tr>
-            {% endfor %}
-        </tbody>
-      </table>
-{% endblock content %}
+{% endblock %}
