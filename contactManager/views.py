@@ -6,6 +6,7 @@ from django.shortcuts import redirect
 import requests
 import json
 import os
+from django.views.decorators.cache import cache_page
 
 # Create your views here.
 
@@ -92,10 +93,11 @@ def editContactPost(request, contact_id):
 #     data = {'listContact': favoriteContact, 'title':'Список избранных контактов','statusCode': statusCode}
 #     return render(request, 'contactManager/favoriteList.html',context=data)
 
-
+@cache_page(60 * 15)
 def favoriteList(request):
-    weatherApi = open('weather.json', encoding='utf-8')
-    jsonResult = json.loads(weatherApi.read()) 
+    headers = {"X-Yandex-API-Key": "cdeb7d86-4476-418d-823f-e960ea47cc57"}
+    weatherApi = requests.get("https://api.weather.yandex.ru/v2/informers?lat=55.785753&lon=49.126218&lang=ru_RU", headers=headers)
+    jsonResult = json.loads(weatherApi.text) 
     temp = (jsonResult['fact'])['temp']
     data = {'temp': temp}
     return render(request, 'contactManager/favoriteList.html',context=data)
