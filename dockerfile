@@ -18,6 +18,8 @@ ENV PYTHONUNBUFFERED 1
 
 COPY requirements.txt ./
 
+RUN apt-get install ca-certificates
+
 RUN pip install -r requirements.txt
 
 

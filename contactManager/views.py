@@ -7,6 +7,15 @@ import requests
 import json
 import os
 from django.views.decorators.cache import cache_page
+from django.core.cache import cache
+
+
+def getWeather():
+    headers = {"X-Yandex-API-Key": "cdeb7d86-4476-418d-823f-e960ea47cc57"}
+    weatherApi = requests.get("https://api.weather.yandex.ru/v2/informers?lat=55.785753&lon=49.126218&lang=ru_RU", headers=headers)
+    jsonResult = json.loads(weatherApi.text) 
+    temp = (jsonResult['fact'])['temp']
+    return temp
 
 # Create your views here.
 
@@ -85,21 +94,23 @@ def editContactPost(request, contact_id):
     # return HttpResponse("Hello mir")
     return redirect(contactList)
 
+
+# @cache_page(60 * 15)
 # def favoriteList(request):
-#     favoriteContact = Contact.objects.filter(is_favorite = True)
-#     responseApi = requests.get('https://randomuser.me/api/')
-#     # statusCode = responseApi.status_code
-#     statusCode = responseApi.text
-#     data = {'listContact': favoriteContact, 'title':'Список избранных контактов','statusCode': statusCode}
+#     headers = {"X-Yandex-API-Key": "cdeb7d86-4476-418d-823f-e960ea47cc57"}
+#     weatherApi = requests.get("https://api.weather.yandex.ru/v2/informers?lat=55.785753&lon=49.126218&lang=ru_RU", headers=headers)
+#     jsonResult = json.loads(weatherApi.text) 
+#     temp = (jsonResult['fact'])['temp']
+#     data = {'temp': temp}
 #     return render(request, 'contactManager/favoriteList.html',context=data)
 
-@cache_page(60 * 15)
+
 def favoriteList(request):
-    headers = {"X-Yandex-API-Key": "cdeb7d86-4476-418d-823f-e960ea47cc57"}
-    weatherApi = requests.get("https://api.weather.yandex.ru/v2/informers?lat=55.785753&lon=49.126218&lang=ru_RU", headers=headers)
-    jsonResult = json.loads(weatherApi.text) 
-    temp = (jsonResult['fact'])['temp']
-    data = {'temp': temp}
+    weatherTemp = cache.get('weatherTempCache')
+    if weatherTemp is None:
+        weatherTemp = getWeather()
+        cache.set('weatherTempCache', weatherTemp, 300)
+    data = {'temp': weatherTemp}
     return render(request, 'contactManager/favoriteList.html',context=data)
 
 def delContact(request, contact_id):
