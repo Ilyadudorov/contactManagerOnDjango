@@ -1,0 +1,38 @@
+{% extends 'contactManager/base.html' %}
+
+{% block content %}
+
+    <table class="table" width="70%">
+        <thead>
+          <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Number phone</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% if count != 0 %}
+            {% for c in listContact %}
+        
+  
+            <td class="tdContactList"><a href="{% url 'selectContact' c.pk %}">{{c.name}}</a></td>
+
+            {% if c.email != None %}
+              <td class="tdContactList">{{c.email}}</td>
+            {% else %}
+              <td class="tdContactList"></td>
+            {% endif %}
+
+            {% if c.phoneNumber != 'None' %}
+              <td class="tdContactList">{{c.phoneNumber}}</td>
+            {% else %}
+              <td class="tdContactList"></td>
+            {% endif %}
+          </div>
+          </tr>
+            {% endfor %}
+
+          {% endif %}
+        </tbody>
+      </table>
+{% endblock content %}

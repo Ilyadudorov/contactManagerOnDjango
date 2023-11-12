@@ -41,10 +41,10 @@ def contactList(request):
     allContact = Contact.objects.all()
     count = allContact.count()
     data = {"listContact": allContact, "count":count}
-    return render(request, 'contactManager/contactList.html', context=data)
+    return render(request, 'contactManager/Contact/contactList.html', context=data)
 
 def addContact(request):
-    return render(request, 'contactManager/addContact.html')
+    return render(request, 'contactManager/Contact/addContact.html')
 
 def addContactPost(request):
     name = request.POST.get("name")
@@ -69,12 +69,12 @@ def addContactPost(request):
 def selectContact(request,contact_id):
     contact = Contact.objects.get(id = contact_id)
     data = {'contact': contact}
-    return render(request, 'contactManager/selectContact.html', context=data)
+    return render(request, 'contactManager/Contact/selectContact.html', context=data)
 
 def editContact(request, contact_id):
     contact = Contact.objects.get(id = contact_id)
     data = {'contact': contact}
-    return render(request, 'contactManager/editContact.html', context=data)
+    return render(request, 'contactManager/Contact/editContact.html', context=data)
 
 def editContactPost(request, contact_id):
     contact = Contact.objects.get(id = contact_id)
@@ -105,14 +105,14 @@ def editContactPost(request, contact_id):
 #     return render(request, 'contactManager/favoriteList.html',context=data)
 
 
-def favoriteList(request):
+def weatherPage(request):
     weatherTemp = cache.get('weatherTempCache')
     if weatherTemp is None:
         weatherTemp = getWeather()
         cache.set('weatherTempCache', weatherTemp, 300)
     data = {'temp': weatherTemp}
-    return render(request, 'contactManager/favoriteList.html',context=data)
-
+    return render(request, 'contactManager/weatherPage.html',context=data)
+    
 def delContact(request, contact_id):
     contact = Contact.objects.get(id = contact_id)
     contact.delete()

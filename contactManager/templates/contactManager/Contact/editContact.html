@@ -1,0 +1,28 @@
+{% extends 'contactManager/base.html' %}
+
+{% block content %}
+
+
+<h2>Форма изменения данных контакта: {{ contact.name }}</h2> <br>
+<!-- <form method="post" action="editContactPost/{{contact.pk}}"> -->
+<form method="post" action="{% url 'editContactPost' contact.pk %}">    
+    {% csrf_token %}
+    <p>Имя: <br> <input type="text" name="name" required value="{{contact.name}}"></p>
+    <p>Почта: <br> <input type="email" name="email" value="{{contact.email}}"></p>
+    <p>Номер телефона: <br>
+    <input name="phoneNumber" data-tel-input id="phone" type="tel" maxlength="18" required value="{{contact.phoneNumber}}">
+    <p>День рождения: <br> <input type="date" name="birthday" value="{{contact.birthday}}" ></p>
+    <p>Должность: <br> <input type="text" name="position" value="{{contact.position}}"></p>
+    <p>Заметка: <br>  <textarea type="text" name="note" >{{contact.note}}</textarea></p>
+    <!-- <p>Фото: <br> <input type="text" name="photo"></p> -->
+    {% if contact.is_favorite == True %}
+    <p>Избранный: <br> <input type="checkbox" name="is_favorite" checked></p>
+    {% else %}
+    <p>Избранный: <br> <input type="checkbox" name="is_favorite" ></p>
+    {% endif %}
+    <input type="submit" value="Добавить">
+</form>
+
+
+
+{% endblock content %}
