@@ -8,6 +8,7 @@ import json
 import os
 from django.views.decorators.cache import cache_page
 from django.core.cache import cache
+from django.views.decorators.csrf import csrf_exempt
 
 
 def getWeather():
@@ -27,16 +28,6 @@ def index(request):
     data = {"listContact": allContact, "title":"Main page", "menu":menu}
     return render(request, 'contactManager/index.html', context=data)
 
-# def about(request):
-#     data = {'title':'About of site'}
-#     return render(request, 'contactManager/about.html', context=data)
-
-# def base(request):
-#     return render(request, 'contactManager/base.html')
-
-# def test(request):
-#     return render(request, 'contactManager/test.html')
-
 def contactList(request):
     allContact = Contact.objects.all()
     count = allContact.count()
@@ -46,6 +37,7 @@ def contactList(request):
 def addContact(request):
     return render(request, 'contactManager/Contact/addContact.html')
 
+@csrf_exempt
 def addContactPost(request):
     name = request.POST.get("name")
     email = request.POST.get("email")
@@ -164,7 +156,7 @@ def addContactInGroupPost(request, group_id):
     for c in contactList:
         c.group = groupObj
         c.save()
-    
+
     return redirect(listGroup)
 
 def testListContact(request):
