@@ -93,3 +93,8 @@ li{
     background-color: white;
     color: #55c49f;
 }
+
+.weatherPage{
+    padding: 40px;
+    text-align: center;
+}
