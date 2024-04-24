@@ -22,7 +22,7 @@ CSRF_TRUSTED_ORIGINS = ["http://localhost:1337"]
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
-# SECRET_KEY = os.environ.get('SECRET_KEY')
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # DEBUG = int(os.environ.get('DEBUG', default=0))
 
@@ -30,7 +30,7 @@ CSRF_TRUSTED_ORIGINS = ["http://localhost:1337"]
 
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-^nfaz!2tx#xol7ar08nf_5cp7%t^iik2)p^+k^%s0)j%$doo&r'
+# SECRET_KEY = 'django-insecure-^nfaz!2tx#xol7ar08nf_5cp7%t^iik2)p^+k^%s0)j%$doo&r'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True  
@@ -50,7 +50,7 @@ CACHES = {
 
 # Application definition
 
-INSTALLED_APPS = [ # Тут необходимо добавлять новые созданные приложения (если конечно хотим чтоб они работали)
+INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -114,14 +114,25 @@ WSGI_APPLICATION = 'practice.wsgi.application'
 #     }
 # }
 
+# DATABASES = {
+#      "default": {
+#          "ENGINE": os.environ.get("SQL_ENGINE", "django.db.backends.sqlite3"),
+#          "NAME": os.environ.get("SQL_DATABASE", BASE_DIR / "db.sqlite3"),
+#          "USER": os.environ.get("SQL_USER", "user"),
+#          "PASSWORD": os.environ.get("SQL_PASSWORD", "postgres"),
+#          "HOST": os.environ.get("SQL_HOST", "localhost"),
+#          "PORT": os.environ.get("SQL_PORT", "5432"),
+#      }
+# }
+
 DATABASES = {
      "default": {
-         "ENGINE": os.environ.get("SQL_ENGINE", "django.db.backends.sqlite3"),
-         "NAME": os.environ.get("SQL_DATABASE", BASE_DIR / "db.sqlite3"),
-         "USER": os.environ.get("SQL_USER", "user"),
-         "PASSWORD": os.environ.get("SQL_PASSWORD", "postgres"),
-         "HOST": os.environ.get("SQL_HOST", "localhost"),
-         "PORT": os.environ.get("SQL_PORT", "5432"),
+         "ENGINE": os.environ.get("SQL_ENGINE"),
+         "NAME": os.environ.get("SQL_DATABASE"),
+         "USER": os.environ.get("SQL_USER"),
+         "PASSWORD": os.environ.get("SQL_PASSWORD"),
+         "HOST": os.environ.get("SQL_HOST"),
+         "PORT": os.environ.get("SQL_PORT"),
      }
 }
 

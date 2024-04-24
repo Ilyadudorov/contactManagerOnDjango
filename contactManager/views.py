@@ -9,7 +9,8 @@ import os
 from django.views.decorators.cache import cache_page
 from django.core.cache import cache
 from django.views.decorators.csrf import csrf_exempt
-
+import os 
+from os import environ
 
 def getWeather():
     headers = {"X-Yandex-API-Key": "cdeb7d86-4476-418d-823f-e960ea47cc57"}
@@ -30,7 +31,7 @@ def index(request):
 def contactList(request):
     allContact = Contact.objects.all()
     count = allContact.count()
-    data = {"listContact": allContact, "count":count}
+    data = {"listContact": allContact, "count":count, }
     return render(request, 'contactManager/Contact/contactList.html', context=data)
 
 def addContact(request):
@@ -97,11 +98,12 @@ def editContactPost(request, contact_id):
 
 
 def weatherPage(request):
+    varProd = os.environ.get("PROD")
     weatherTemp = cache.get('weatherTempCache')
     if weatherTemp is None:
         weatherTemp = getWeather()
         cache.set('weatherTempCache', weatherTemp, 300)
-    data = {'temp': weatherTemp}
+    data = {'temp': weatherTemp, "checkProd": varProd}
     return render(request, 'contactManager/weatherPage.html',context=data)
     
 def delContact(request, contact_id):
