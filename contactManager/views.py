@@ -21,7 +21,6 @@ def getWeather():
 
 # Create your views here.
 
-
 def index(request):
     menu = ["About site", "Add contact", "Feedback"]
     allContact = Contact.objects.all()
