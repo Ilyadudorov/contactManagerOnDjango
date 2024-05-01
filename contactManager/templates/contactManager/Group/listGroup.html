@@ -3,6 +3,11 @@
 {% block content %}
 <li><a href="{% url 'createGroup' %}">Создать группу</a></li>
 <h2>Список групп</h2>
+<!-- <ol>
+  {% for g in listGroup %}
+  <li><a id='linktd' href="{% url 'selectGroup' g.pk %}">{{g.name}}</a></li>
+  {% endfor %}
+</ol>
 <table class="table">
     <thead>
       <tr>
@@ -16,6 +21,36 @@
         <td><a id='linktd' href="{% url 'selectGroup' g.pk %}">{{g.name}}</a></td>
 
         {% endfor %}
+    </tbody>
+  </table> -->
+
+  <div class="vertical-menu">
+    {% for g in listGroup %}
+    <a href="{% url 'selectGroup' g.pk %}" class="active">{{g.name}}</a>
+    {% endfor %}
+  </div>
+
+
+  <table class="table" width="70%">
+    <thead>
+      <tr>
+        <th scope="col">Group</th>
+        <th scope="col">Count contacts</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% if count != 0 %}
+        {% for c in listContact %}
+
+        <td class="tdContactList"><a href="{% url 'selectGroup' g.pk %}">{{g.name}}</a></td>
+        
+        <td class="tdContactList">{{c.count}}</td>
+        
+      </div>
+      </tr>
+        {% endfor %}
+
+      {% endif %}
     </tbody>
   </table>
 

@@ -1,5 +1,6 @@
 from django.urls import path
 from .views import *
+from .viewsGroup import *
 
 urlpatterns = [
     path('', contactList),
@@ -15,7 +16,7 @@ urlpatterns = [
     path('editContact/<int:contact_id>', editContact, name='editContact'),
     path('editContactPost/<int:contact_id>', editContactPost, name='editContactPost'),
 
-    path('favoriteList/', favoriteList, name='favoriteList'),
+    path('weatherPage/', weatherPage, name='weatherPage'),
     path('delContact/<int:contact_id>', delContact, name='delContact'),
 
     path('createGroup/', createGroup, name='createGroup'),

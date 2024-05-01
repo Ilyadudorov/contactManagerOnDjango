@@ -1,0 +1,30 @@
+{% extends 'contactManager/base.html' %}
+<h1>{% block header %}Форма добавления контакта{% endblock header %}
+
+    
+{% block content %}
+<div class="contact-add-form">
+    <form  method="post" action="addContactPost/">
+        {% csrf_token %}
+        <p>Имя: <br> <input type="text" name="name" required ></p>
+        <p>Почта: <br> <input type="email" name="email"></p>
+        <p>Номер телефона: <br>
+        <input name="phoneNumber" data-tel-input id="phone" type="tel" maxlength="18" required>
+        <p>День рождения: <br> <input type="date" name="birthday"></p>
+        <p>Должность: <br> <input type="text" name="position"></p>
+        <p>Заметка: <br>  <textarea type="text" name="note"></textarea></p>
+        <!-- <p>Фото: <br> <input type="text" name="photo"></p> -->
+        <p>Избранный: <br> <input type="checkbox" name="is_favorite"></p>
+        <input type="submit" value="Добавить">
+    </form>
+</div>
+
+<br>
+<br>
+
+<div class="text-filed">
+    <input class="text-filed_inp" type="text" name="name">
+    <label class="text-filed_placeholder">Имя</label>
+</div>
+{% endblock content %}
+

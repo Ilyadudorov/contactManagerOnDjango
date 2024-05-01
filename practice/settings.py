@@ -17,6 +17,7 @@ from os import environ
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+CSRF_TRUSTED_ORIGINS = ["http://localhost:1337"]
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
@@ -40,9 +41,16 @@ ALLOWED_HOSTS = ['*']   #Разрешенные ip адреса после от�
 
 
 
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+    }
+} 
+
+
 # Application definition
 
-INSTALLED_APPS = [ # Тут необходимо добавлять новые созданные приложения (если конечно хотим чтоб они работали)
+INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -88,12 +96,12 @@ WSGI_APPLICATION = 'practice.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
+#DATABASES = {
+#    'default': {
+#        'ENGINE': 'django.db.backends.sqlite3',
+#        'NAME': BASE_DIR / 'db.sqlite3',
+#    }
+#}
 
 # DATABASES = {
 #     'default': {
@@ -106,15 +114,26 @@ WSGI_APPLICATION = 'practice.wsgi.application'
 #     }
 # }
 
+# DATABASES = {
+#      "default": {
+#          "ENGINE": os.environ.get("SQL_ENGINE", "django.db.backends.sqlite3"),
+#          "NAME": os.environ.get("SQL_DATABASE", BASE_DIR / "db.sqlite3"),
+#          "USER": os.environ.get("SQL_USER", "user"),
+#          "PASSWORD": os.environ.get("SQL_PASSWORD", "postgres"),
+#          "HOST": os.environ.get("SQL_HOST", "localhost"),
+#          "PORT": os.environ.get("SQL_PORT", "5432"),
+#      }
+# }
+
 DATABASES = {
-    "default": {
-        "ENGINE": os.environ.get("SQL_ENGINE", "django.db.backends.sqlite3"),
-        "NAME": os.environ.get("SQL_DATABASE", BASE_DIR / "db.sqlite3"),
-        "USER": os.environ.get("SQL_USER", "user"),
-        "PASSWORD": os.environ.get("SQL_PASSWORD", "postgres"),
-        "HOST": os.environ.get("SQL_HOST", "localhost"),
-        "PORT": os.environ.get("SQL_PORT", "5432"),
-    }
+     "default": {
+         "ENGINE": os.environ.get("SQL_ENGINE"),
+         "NAME": os.environ.get("SQL_DATABASE"),
+         "USER": os.environ.get("SQL_USER"),
+         "PASSWORD": os.environ.get("SQL_PASSWORD"),
+         "HOST": os.environ.get("SQL_HOST"),
+         "PORT": os.environ.get("SQL_PORT"),
+     }
 }
 
 
@@ -163,4 +182,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  #MEDIA_ROOT это кастомная переменная она создает пусть следующим образом:
                                               # берет главный каталог проекта, то есть переменную BASE_DIR, и добавляет туда папку media.
                                               # 
-MEDIA_URL = '/media/' # Данная переменная нужна для добавления её к граф файлам, это нужно для обращения к ним
+MEDIA_URL = '/media/' # Данная переменная нужна для добавления пути к граф файлам, это нужно для обращения к ним

@@ -10,10 +10,11 @@ services:
       - 8000
     env_file:
       - ./.env.dev
+    container_name: django
     depends_on:
       - pgdb
       
-  pgdb:
+  pgdb: 
     image: postgres:13.0-alpine
     env_file:
       - ./.env.dev.db
@@ -30,6 +31,7 @@ services:
       - static_volume:/home/app/web/staticfiles
     ports:
       - 1337:80
+    container_name: nginx
     depends_on:
       - web
 

@@ -4,10 +4,22 @@ from contactManager.models import *
 from .forms import UserForm
 from django.shortcuts import redirect
 import requests
+import json
+import os
+from django.views.decorators.cache import cache_page
+from django.core.cache import cache
+from django.views.decorators.csrf import csrf_exempt
+import os 
+from os import environ
+
+def getWeather():
+    headers = {"X-Yandex-API-Key": "cdeb7d86-4476-418d-823f-e960ea47cc57"}
+    weatherApi = requests.get("https://api.weather.yandex.ru/v2/informers?lat=55.785753&lon=49.126218&lang=ru_RU", headers=headers)
+    jsonResult = json.loads(weatherApi.text) 
+    temp = (jsonResult['fact'])['temp']
+    return temp
 
 # Create your views here.
-
-
 
 def index(request):
     menu = ["About site", "Add contact", "Feedback"]
@@ -15,25 +27,16 @@ def index(request):
     data = {"listContact": allContact, "title":"Main page", "menu":menu}
     return render(request, 'contactManager/index.html', context=data)
 
-# def about(request):
-#     data = {'title':'About of site'}
-#     return render(request, 'contactManager/about.html', context=data)
-
-# def base(request):
-#     return render(request, 'contactManager/base.html')
-
-# def test(request):
-#     return render(request, 'contactManager/test.html')
-
 def contactList(request):
     allContact = Contact.objects.all()
     count = allContact.count()
-    data = {"listContact": allContact, "count":count}
-    return render(request, 'contactManager/contactList.html', context=data)
+    data = {"listContact": allContact, "count":count, }
+    return render(request, 'contactManager/Contact/contactList.html', context=data)
 
 def addContact(request):
-    return render(request, 'contactManager/addContact.html')
+    return render(request, 'contactManager/Contact/addContact.html')
 
+@csrf_exempt
 def addContactPost(request):
     name = request.POST.get("name")
     email = request.POST.get("email")
@@ -57,12 +60,12 @@ def addContactPost(request):
 def selectContact(request,contact_id):
     contact = Contact.objects.get(id = contact_id)
     data = {'contact': contact}
-    return render(request, 'contactManager/selectContact.html', context=data)
+    return render(request, 'contactManager/Contact/selectContact.html', context=data)
 
 def editContact(request, contact_id):
     contact = Contact.objects.get(id = contact_id)
     data = {'contact': contact}
-    return render(request, 'contactManager/editContact.html', context=data)
+    return render(request, 'contactManager/Contact/editContact.html', context=data)
 
 def editContactPost(request, contact_id):
     contact = Contact.objects.get(id = contact_id)
@@ -82,14 +85,26 @@ def editContactPost(request, contact_id):
     # return HttpResponse("Hello mir")
     return redirect(contactList)
 
-def favoriteList(request):
-    favoriteContact = Contact.objects.filter(is_favorite = True)
-    responseApi = requests.get('https://randomuser.me/api/')
-    # statusCode = responseApi.status_code
-    statusCode = responseApi.text
-    data = {'listContact': favoriteContact, 'title':'Список избранных контактов','statusCode': statusCode}
-    return render(request, 'contactManager/favoriteList.html',context=data)
 
+# @cache_page(60 * 15)
+# def favoriteList(request):
+#     headers = {"X-Yandex-API-Key": "cdeb7d86-4476-418d-823f-e960ea47cc57"}
+#     weatherApi = requests.get("https://api.weather.yandex.ru/v2/informers?lat=55.785753&lon=49.126218&lang=ru_RU", headers=headers)
+#     jsonResult = json.loads(weatherApi.text) 
+#     temp = (jsonResult['fact'])['temp']
+#     data = {'temp': temp}
+#     return render(request, 'contactManager/favoriteList.html',context=data)
+
+
+def weatherPage(request):
+    varProd = os.environ.get("PROD")
+    weatherTemp = cache.get('weatherTempCache')
+    if weatherTemp is None:
+        weatherTemp = getWeather()
+        cache.set('weatherTempCache', weatherTemp, 300)
+    data = {'temp': weatherTemp, "checkProd": varProd}
+    return render(request, 'contactManager/weatherPage.html',context=data)
+    
 def delContact(request, contact_id):
     contact = Contact.objects.get(id = contact_id)
     contact.delete()
@@ -141,7 +156,7 @@ def addContactInGroupPost(request, group_id):
     for c in contactList:
         c.group = groupObj
         c.save()
-    
+
     return redirect(listGroup)
 
 def testListContact(request):
