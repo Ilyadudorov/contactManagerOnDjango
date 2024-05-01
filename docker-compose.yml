@@ -14,7 +14,7 @@ services:
     depends_on:
       - pgdb
       
-  pgdb:
+  pgdb: 
     image: postgres:13.0-alpine
     env_file:
       - ./.env.dev.db
