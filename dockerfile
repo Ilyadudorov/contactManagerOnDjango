@@ -41,5 +41,4 @@ USER app
 ENTRYPOINT ["/home/app/web/entrypoint.sh"]
 
 #EXPOSE 8080
-#нижняя команда нужна только если нет docker-compose.yml
 #CMD ["python", "manage.py", "runserver", "0.0.0.0:8080"]
